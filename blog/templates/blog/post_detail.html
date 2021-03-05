@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load hitcount_tags %}
+{% load humanize %}
+
+
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+
+        <small class="text-muted">{{ object.date_posted|naturaltime }} | {% get_hit_count for object %}</small>
+
+        {% if object.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ object.title }}</h2>
+      <p class="article-content">{{ object.content|safe}}</p>
+      <!-- <p class="">{{object.image.url}}</p> -->
+
+      <!-- <div class="d-flex flex-row align-items-start">
+        <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+        <textarea class="form-control ml-1 shadow-none textarea"></textarea>
+      </div>
+      <div class="mt-2 text-right">
+        <button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button>
+        <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+      </div> -->
+      <!-- <button class="btn btn-primary">Likes</button>{{total_likes}} -->
+    </div>
+
+  </article>
+  
+  
+
+{% endblock content %}
